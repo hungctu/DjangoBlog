@@ -1,0 +1,48 @@
+{% extends 'User/base.html' %}
+{% load static %}
+
+{% block content %}
+<main id="main">
+  <section class="section">
+    <div class="row">
+      <center>
+        <div class="col-lg-8">
+          <div>
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'book_list_manage' user.id %}">Danh sách bài viết</a></li>
+                <li class="breadcrumb-item active"><a href="{% url 'book_detail' id %}">Chi tiết bài viết</a> </li>
+                <li class="breadcrumb-item">Thêm chap</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="card">
+            <div class="card-body">CHAP MỚI</h5>
+              <!-- General Form Elements -->
+              <form action="{% url 'add_chap' id %}" method="post">
+                {% csrf_token %}
+				<div class="row mb-3">
+                  <label  class="col-sm-2 col-form-label">Tên chap:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="name" required>
+                  </div>
+                </div>
+				 <!-- TinyMCE Editor -->
+				<textarea  name="content" required >Không được để trống</textarea><!-- End TinyMCE Editor -->
+
+                </br></br>
+                <div class="row mb-3">
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary" style="float:right">Xác nhận</button>
+                  </div>
+                </div>
+              </form><!-- End General Form Elements -->
+            </div>
+          </div>
+        </div>
+      </center>
+    </div>
+  </section>
+</main>
+{% endblock %}

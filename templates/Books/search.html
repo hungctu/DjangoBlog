@@ -1,0 +1,96 @@
+{% extends 'Books/base.html' %}
+{% load static %}
+
+{% block content %}
+  <main id="main">
+	 <section>
+      <div class="container" >
+        <div class="row">
+		<center>
+          <div class="col-md-8" data-aos="fade-up">
+			</br>
+            <h3 class="category-title" align="left">Search: {{key}}</h3>
+			  {% for item in ds %}
+				<div class="d-md-flex post-entry-2 half" style="border: thin solid black;border-radius: 20px; background:white">
+					<div class="col-md-3" data-aos="fade-up" style="margin-left:20px;margin-top:20px;margin-bottom:20px">
+					  <a href="{% url 'book' item.id %}" class="me-4 thumbnail">
+					   <img src="{{ item.book_image.url }}" alt="" class="img-fluid">
+					  </a>
+					 </div>
+					<div>
+					<div class="col-md-10" data-aos="fade-up" style="margin-top:20px;margin-bottom:20px">
+						<div class="post-meta" align="left"><span>Jul 5th '22</span></div>
+						<h3 align="left"><a href="{% url 'book' item.id %}">{{ item.book_name }}</a></h3>
+
+						<div class="d-flex align-items-center author" align="left">
+						  <div class="name">
+							<h3 class="m-0 p-0">Tác giả: <a href="{% url 'book_author' item.user_id %}">{{ item.user.fullname }}</a></h3>
+						  </div>
+						</div>
+
+						<div class="d-flex align-items-center author" align="left">
+						  <div class="name">
+							<table>
+								<th>
+								{% for t in cd %}
+									{% if t.book.id == item.id %}
+										<td>
+											<a style="margin-right: 10px;color: #0a53be" href="{% url 'book_topic' t.topic.id %}">
+												<button type="button" class="btn btn-light rounded-pill">{{t.topic.topic_name}}</button>
+											</a>
+										</td>
+									{% endif %}
+								{% endfor %}
+								</th>
+							</table>
+						  </div>
+						</div>
+
+
+						<div class="d-flex align-items-center author" align="left">
+						  <div class="name">
+							<table>
+								<th>
+								{% for t in tl %}
+									{% if t.book.id == item.id %}
+										<td>
+											<a style="margin-right: 10px;color: #0a53be" href="{% url 'book_category' t.category.id %}">
+												<button type="button" class="btn btn-dark rounded-pill">
+													{{t.category.category_name}}</button>
+											</a>
+										</td>
+									{% endif %}
+								{% endfor %}
+								</th>
+							</table>
+						  </div>
+						</div>
+
+						<p align="left">{{ item.book_synopsis }}
+						</p>
+					</div>
+					</div>
+				</div>
+			  {% endfor %}
+			
+			
+            <div class="text-start py-4">
+              <div class="custom-pagination">
+                <a href="#" class="prev">Prevous</a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#" class="next">Next</a>
+              </div>
+            </div>
+          </div>
+		</center>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}
+
+

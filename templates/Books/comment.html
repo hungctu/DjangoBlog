@@ -1,0 +1,46 @@
+<!-- ======= Comments Form ======= -->
+<div class="row justify-content-center mt-5">
+<div class="col-lg-12">
+  <h5 class="comment-title">Comment</h5>
+  <form id="comment-form" action="{% url 'chap' ds.id  chap.id %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12 mb-3">
+          <label for="comment-message">Message</label>
+          <textarea class="form-control" id="comment-message" name="comment-message" placeholder="Nhập bình luận của bạn" cols="20" rows="5" required></textarea>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary" >Đăng</button>
+        </div>
+    </div>
+  </form>
+</div>
+</div>
+<!-- End Comments Form -->
+
+<!-- ======= Comments ======= -->
+<div class="comments" id="comments" >
+  {% if len > 0 %}
+    <h5 class="comment-title py-4">{{len}} Comments</h5>
+  {% endif %}
+  {% if comments|length > 0 %}
+    {% for item in comments %}
+      <div class="comment d-flex" style="margin-bottom: 30px">
+        <div class="flex-shrink-0">
+          <div class="avatar avatar-sm rounded-circle">
+            <img class="avatar-img" src="{{item.user.user_image.url}}" alt="">
+          </div>
+        </div>
+        <div class="flex-shrink-1 ms-2 ms-sm-3">
+          <div class="comment-meta d-flex">
+            <h6 class="me-2" >{{item.user.fullname}}</h6>
+            <span class="text-muted">{{item.date_submit}}</span>
+          </div>
+          <div class="comment-body" >{{item.content}}</div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<!-- End Comments -->

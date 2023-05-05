@@ -1,0 +1,60 @@
+<!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1>ZenBlog</h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'index' %}">Trang chủ</a></li>
+          <li><a href="{% url 'topic_list' %}">Chủ đề</a></li>
+		  <li><a href="{% url 'category_list' %}">Thể loại</a></li>
+          {% if user.is_authenticated %}
+              <li class="dropdown"><a href="">
+                <img src="{{user.user_image.url}}" alt="" style="height: 35px;width: 35px" class="rounded-circle">&nbsp;{{user.fullname}}</a>
+                <ul>
+                  <li><a href="{% url 'user_profile' %}">Thông tin người dùng</a></li>
+                  <li><a href="{% url 'book_list_manage' user.id %}">Danh sách đầu sách</a></li>
+                  <li>
+                    <a href="javascript: document.logoutform.submit()">Đăng xuất</a>
+                    <form name="logoutform" action="{% url 'logout' %}" method="post" hiden="true">
+                      {% csrf_token %}
+                      <input hidden type="submit" value="Đăng xuất">
+                    </form>
+                  </li>
+                </ul>
+              </li>
+            {% else %}
+              <li><a href="{% url 'login' %}">Dăng nhập</a></li>
+              <li><a href="{% url 'register' %}">Đăng ký</a></li>
+          {% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+
+      <div class="position-relative">
+        <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+        <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+        <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+        <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+
+        <!-- ======= Search Form ======= -->
+        <div class="search-form-wrap js-search-form-wrap">
+          <form action="{% url 'search' %}" method="post" class="search-form">
+            {% csrf_token %}
+            <button style="border:none;background-color:white" type="submit" class="icon bi-search"></button>
+             <input type="text" placeholder="Search" class="form-control" name="key">
+            <button class="btn js-search-close" type="submit"><span class="bi-x"></span></button>
+          </form>
+        </div><!-- End Search Form -->
+
+      </div>
+
+    </div>
+
+  </header><!-- End Header -->
