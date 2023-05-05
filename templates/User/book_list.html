@@ -1,0 +1,88 @@
+{% extends 'User/base.html' %}
+{% load static %}
+
+{% block content %}
+<main id="main" xmlns="http://www.w3.org/1999/html">
+
+	 <section class="section">
+      <div class="row">
+	  <center>
+
+        <div class="col-lg-8">
+			<div>
+				  <nav>
+					<ol class="breadcrumb">
+					  <li class="breadcrumb-item"><a href="{% url 'index' %}">Trang chủ</a></li>
+					  <li class="breadcrumb-item">Danh sách bài viết</li>
+					</ol>
+				  </nav>
+			</div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Danh sách bài viết</h5>
+
+              <!-- General Form Elements -->
+
+                <div class="row mb-3">
+                  <div class="col-sm-10">
+                    <a href="{% url 'add_book' user.id%}">
+                     <button class="btn btn-primary" style="float:left">Thêm bài viết</button>
+                    </a>
+                  </div>
+                </div>
+
+			  <table class="table table-striped" >
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+					<th scope="col">Hình đại diện</th>
+                    <th scope="col">Tên fanfic</th>
+                    <th scope="col">Số Chap</th>
+                    <th scope="col">Ngày cập nhật gần nhất</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in books%}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td style="width:20%">
+                         <img src="{{item.book_image.url}}" alt="" style="width:30%">
+                      </td>
+                      <td>{{item.book_name}}</td>
+                      {% for l in list %}
+                        {% if l.0 == item.id %}
+                          <td>{{l.1}} chaps</td>
+                          <td>{{l.2}}</td>
+                        {% endif %}
+                      {% endfor %}
+                      <td>
+                        <a href="{% url 'book_detail' item.id %}">
+                            <button type="button" class="btn btn-primary btn-sm">Chi tiết</button>
+                        </a>
+                        <a href="{% url 'update_book' item.id user.id %}">
+                          <button type="button" class="btn btn-primary btn-sm">Cập nhật</button>
+                        </a>
+                        <a href="{% url 'status_update' item.id user.id %}">
+                          {% if item.status == 1 %}
+                            <button type="button" class="btn btn-primary btn-sm" >Ẩn</button>
+                            {% else %}
+                            `<button type="button" class="btn btn-primary btn-sm" >Hiện</button>
+                          {% endif %}
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+		</center>
+      </div>
+    </section>
+</main>
+
+{% endblock %}

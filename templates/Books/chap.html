@@ -1,0 +1,169 @@
+{% extends 'Books/base.html' %}
+{% load static %}
+
+{% block content %}
+<main id="main">
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8" data-aos="fade-up">
+          <div>
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'book' ds.id %}" >{{ds.book_name}}</a></li>
+                <li class="breadcrumb-item active" >{{chap.chapter_name}}</li>
+              </ol>
+            </nav>
+          </div>
+
+          <div class="d-md-flex post-entry-2 half">
+              <div class="btn-group" role="group" style="margin: auto">
+                {% if chap.id > first.id %}
+                  <a href="{% url 'chap' ds.id prev.id%}">
+                    <button type="button" class="btn btn-primary">Prev</button>
+                  </a>
+                  {% else %}
+                    <a>
+                        <button type="button" class="btn btn-primary" disabled>Prev</button>
+                    </a>
+                {% endif %}
+              <select class="form-select" onchange="window.location.href=this.value" style="width: 300px">
+                {% for item in chaps %}
+                  <option
+                          value="{% url 'chap' ds.id item.id%}"
+                          {% if chap.id == item.id %}
+                            selected="selected"
+                          {% endif %}>{{item.chapter_name}}
+                  </option>
+
+                {% endfor %}
+              </select>
+                {% if chap.id < last.id %}
+                  <a href="{% url 'chap' ds.id next.id%}">
+                    <button type="button" class="btn btn-primary">Next</button>
+                  </a>
+                {% else %}
+                  <a unless="">
+                      <button type="button" class="btn btn-primary" disabled>Next</button>
+                  </a>
+                {% endif %}
+            </div>
+          </div>
+
+          <div class="d-md-flex post-entry-2 half" style="margin-top: 15px;border: thin solid black;border-radius: 10px; background:white">
+            <div style="margin-left: 20px; margin-right: 20px;margin-top: 10px;margin-bottom: 15px">
+              {% autoescape off %}
+                {{chap.chapter_content}}
+              {% endautoescape %}
+            </div>
+
+          </div>
+
+          <div class="d-md-flex post-entry-2 half">
+              <div class="btn-group" role="group" style="margin: auto">
+                {% if chap.id > first.id %}
+                  <a href="{% url 'chap' ds.id prev.id%}">
+                    <button type="button" class="btn btn-primary">Prev</button>
+                  </a>
+                {% else %}
+                  <a>
+                      <button type="button" class="btn btn-primary" disabled>Prev</button>
+                  </a>
+                {% endif %}
+              <select class="form-select" onchange="window.location.href=this.value" style="width: 300px">
+                {% for item in chaps %}
+                  <option
+                          value="{% url 'chap' ds.id item.id%}"
+                          {% if chap.id == item.id %}
+                            selected="selected"
+                          {% endif %}>{{item.chapter_name}}
+                  </option>
+                {% endfor %}
+              </select>
+                {% if chap.id < last.id %}
+                  <a href="{% url 'chap' ds.id next.id%}">
+                    <button type="button" class="btn btn-primary">Next</button>
+                  </a>
+                {% else %}
+                  <a unless="">
+                      <button type="button" class="btn btn-primary" disabled>Next</button>
+                  </a>
+                {% endif %}
+            </div>
+          </div>
+          {% include 'Books/comment.html' %}
+<!--          &lt;!&ndash; ======= Comments Form ======= &ndash;&gt;-->
+<!--          <div class="row justify-content-center mt-5">-->
+<!--            <div class="col-lg-12">-->
+<!--              <h5 class="comment-title">Comment</h5>-->
+<!--              <form id="comment-form" method="get">-->
+<!--                {% csrf_token %}-->
+<!--                <div class="row">-->
+<!--                    <input type="hidden" name="chapter_id" id="chapter_id" value="{{chap.id}}">-->
+<!--                    <input type="hidden" name="book_id" id="book_id" value="{{ds.id}}">-->
+<!--                    <div class="col-12 mb-3">-->
+<!--                      <label for="comment-message">Message</label>-->
+<!--                      <textarea class="form-control" id="comment-message" name="comment-message" placeholder="Nhập bình luận của bạn" cols="20" rows="5" required></textarea>-->
+<!--                    </div>-->
+<!--                    <div class="col-12">-->
+<!--                      <button type="submit" class="btn btn-primary" >Đăng</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--              </form>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          &lt;!&ndash; End Comments Form &ndash;&gt;-->
+
+<!--          &lt;!&ndash; ======= Comments ======= &ndash;&gt;-->
+<!--          <div class="comments" >-->
+<!--            <h5 class="comment-title py-4">0 Comments</h5>-->
+<!--            {% if comments|length > 0 %}-->
+<!--              {% for item in comments %}-->
+<!--                <div class="comment d-flex" style="margin-bottom: 30px">-->
+<!--                  <div class="flex-shrink-0">-->
+<!--                    <div class="avatar avatar-sm rounded-circle">-->
+<!--                      <img class="avatar-img" src="{{item.user.user_image.url}}" alt="">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="flex-shrink-1 ms-2 ms-sm-3">-->
+<!--                    <div class="comment-meta d-flex">-->
+<!--                      <h6 class="me-2" >{{item.user.fullname}}</h6>-->
+<!--                      <span class="text-muted">{{item.date_submit}}</span>-->
+<!--                    </div>-->
+<!--                    <div class="comment-body" >{{item.content}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              {% endfor %}-->
+<!--            {% endif %}-->
+<!--          </div>&lt;!&ndash; End Comments &ndash;&gt;-->
+        </div>
+
+        <div class="col-md-3">
+          <!-- ======= Sidebar ======= -->
+          <div class="aside-block">
+
+            <div class="tab-content">
+              <!-- Popular -->
+                <h3>Bài viết nhiều người đọc</h3></br>
+                <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+                  {% for item in hot %}
+                    <div class="post-entry-1 border-bottom">
+                      <h2 class="mb-2"><a href="" >{{item.book_name}}</a></h2>
+                      <span class="author mb-3 d-block">{{item.user.fullname}}</span>
+                    </div>
+                  {% endfor %}
+                </div> <!-- End Popular -->
+
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main><!-- End #main -->
+
+{% endblock %}

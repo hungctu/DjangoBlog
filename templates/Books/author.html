@@ -1,0 +1,124 @@
+{% extends 'Books/base.html' %}
+{% load static %}
+
+{% block content %}
+  <main id="main">
+	<section>
+		<div class="container" >
+			<div class="row">
+	
+				<div class="col-md-11" data-aos="fade-up" style="margin: auto">
+
+					<section class="section profile">
+					  <div class="row">
+						<div class="col-xl-4">
+
+						  <div class="card">
+							<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+							  <img src="{{ author.user_image.url }}" style="height:90px;width: 90px;border: thin solid black;" alt="Profile" class="rounded-circle">
+							  <h4>{{author.fullname}}</h4>
+							  <div class="social-links mt-2">
+                                  <img src="{% static 'assets/img/eye.png' %}" style="max-width: 30px" alt=""> &nbsp; 0 &emsp;
+                                  <img src="{% static 'assets/img/like.png' %}" style="max-width: 30px" alt=""> &nbsp; 0 &emsp;
+                                  <img src="{% static 'assets/img/dislike.png' %}" style="max-width: 30px" alt=""> &nbsp; 0
+							  </div>
+							</div>
+						  </div>
+
+						</div>
+
+						<div class="col-xl-8">
+
+						  <div class="card">
+							<div class="card-body pt-3">
+							  <!-- Bordered Tabs -->
+							  <ul class="nav nav-tabs nav-tabs-bordered">
+								<li class="nav-item">
+								  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Danh sách tác phẩm</button>
+								</li>
+							  </ul>
+							  <div class="tab-content pt-2">
+
+								<div class="tab-pane fade show active profile-overview" id="profile-overview">
+								  	{% for item in books %}
+										<div class="d-md-flex post-entry-2 half">
+											<div class="col-md-3" data-aos="fade-up" style="margin-left:20px;margin-top:5px;margin-bottom:5px;margin-right:20px">
+											  <a href="{% url 'book' item.id %}" class="me-4 thumbnail">
+											   <img src="{{item.book_image.url}}" alt="" class="img-fluid">
+											  </a>
+											 </div>
+											<div>
+												<div class="cols-sm-6" data-aos="fade-up" style="margin-top:5px;margin-bottom:5px">
+													<div class="post-meta" align="left">
+														{% for i in date %}
+															{% if i.id == item.id %}
+																<span>{{i.date}}</span>
+															{% endif %}
+														{% endfor %}
+													</div>
+													<h5 align="left"><a href="{% url 'book' item.id %}" >{{item.book_name}}</a></h5>
+
+													<div class="d-flex align-items-center author" align="left">
+														<div class="name">
+															<table>
+																<th>
+																{% for t in cd %}
+																	{% if t.book.id == item.id %}
+																		<td>
+																			<a style="margin-right: 10px;color: #0a53be" href="{% url 'book_topic' t.topic.id %}">
+																				<button type="button" class="btn btn-light rounded-pill">{{t.topic.topic_name}}</button>
+																			</a>
+																		</td>
+																	{% endif %}
+																{% endfor %}
+																</th>
+															</table>
+														</div>
+													</div>
+													<div class="d-flex align-items-center author" align="left">
+														<div class="name">
+															<table>
+																<th>
+																{% for t in tl %}
+																	{% if t.book.id == item.id %}
+																		<td>
+																			<a style="margin-right: 10px;color: #0a53be" href="{% url 'book_category' t.category.id %}">
+																				<button type="button" class="btn btn-dark rounded-pill">
+																					{{t.category.category_name}}</button>
+																			</a>
+																		</td>
+																	{% endif %}
+																{% endfor %}
+																</th>
+															</table>
+														</div>
+													</div>
+													<p style="overflow: hidden;display: -webkit-box;-webkit-line-clamp: 6;-webkit-box-orient: vertical;" align="left">
+														{% autoescape off %}
+															{{ item.book_synopsis }}
+														{% endautoescape %}
+													</p>
+												</div>
+											</div>
+										</div>
+								  	{% endfor %}
+
+								</div>
+
+							  </div><!-- End Bordered Tabs -->
+
+							</div>
+						  </div>
+
+						</div>
+					  </div>
+					</section>
+								
+				</div>
+			</div>
+		</div>
+	</section>
+    
+  </main><!-- End #main -->
+{% endblock %}

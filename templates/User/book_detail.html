@@ -1,0 +1,120 @@
+{% extends 'User/base.html' %}
+{% load static %}
+
+{% block content %}
+<main id="main">
+  <section>
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-8" data-aos="fade-up" style="margin: auto">
+          <div class="d-md-flex post-entry-2 half" style="border: thin solid black;border-radius: 20px; background:white">
+            <div class="col-md-3" data-aos="fade-up" style="margin-left:20px;margin-top:20px;margin-bottom:20px">
+              <img src="{{book.book_image.url}}" alt="" class="img-fluid">
+            </div>
+            <div>
+              <div class="cols-sm-5" data-aos="fade-up" style="margin-top:20px;margin-bottom:20px;margin-left: 40px;margin-right: 10px">
+                <h1 align="left">{{book.book_name}}</h1>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <table>
+                      <th>
+                        {% for item in tl %}
+                          {% if item.book_id == book.id %}
+                            <td>
+                              <a style="margin-right: 10px;color: #0a53be" href="{% url 'book_category' item.category.id %}" >
+                                <button type="button" class="btn btn-light rounded-pill">{{item.category.category_name}}</button>
+                              </a>
+                            </td>
+                          {% endif %}
+                        {% endfor %}
+                      </th>
+                    </table>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <h3 class="m-0 p-0"> <img src="{% static 'assets/img/eye.png' %}" alt=""> &nbsp 0</h3>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <h3 class="m-0 p-0"> <img src="{% static 'assets/img/like.png' %} " alt=""> &nbsp 0</th></h3>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <h3 class="m-0 p-0"> <img src="{% static 'assets/img/dislike.png'%}" alt=""> &nbsp 0</th></h3>
+                  </div>
+                </div>
+                <a href="{% url 'update_book' book.id user.id %}">
+                  <button class="btn btn-primary" style="margin:auto;width: 100%" type="button">Sửa đầu sách</button>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="cols-sm-5">
+            <div class="cols-sm-5" style="margin-top: 15px">
+              <p>{{book.book_synopsis}}</p>
+            </div>
+            <table>
+
+              <th>
+              {% for item in cd %}
+                {% if item.book_id == book.id %}
+                  <td>
+                    <a style="margin-right: 10px;color: #0a53be" href="{% url 'book_topic' item.topic.id %}">
+                      <button type="button" class="btn btn-dark rounded-pill">{{item.topic.topic_name}}</button>
+                    </a>
+                  </td>
+                {% endif %}
+              {% endfor %}
+              </th>
+            </table>
+          </div>
+
+          <div class="cols-sm-5" style="margin-top: 15px;border: thin solid black;border-radius: 20px; background:white">
+            <a href="{% url 'add_chap' book.id %}">
+              <button type="button" class="btn btn-primary btn-sm" style="margin-top: 20px;margin-left: 20px">Thêm chap mới</button>
+            </a>
+            <div class="card-body" style="margin-top: 5px;margin-left: 20px;margin-right: 20px">
+              <!-- Default Table -->
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tên Chap</th>
+                  <th scope="col">Ngày đăng</th>
+                  <th scope="col">Số lượt xem</th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in chaps %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{item.chapter_name}}</td>
+                    <td style="margin-right: 10px">{{item.date_create}}</td>
+                    <td>{{item.view_number}}</td>
+                    <td>
+                      <a href="{% url 'update_chap' book.id item.id %}">
+                        <button type="button" class="btn btn-primary btn-sm">Cập nhật</button>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main><!-- End #main -->
+
+{% endblock %}

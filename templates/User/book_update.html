@@ -1,0 +1,124 @@
+{% extends 'User/base.html' %}
+{% load static %}
+
+{% block content %}
+<main id="main">
+    <section>
+        <div class="container" >
+            <div class="row">
+                <div class="col-md-9" style="margin: auto">
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'book_list_manage' user.id %}">Danh sách bài viết</a></li>
+                            <li class="breadcrumb-item">Sửa bài viết</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-9" data-aos="fade-up" style="margin: auto;border: thin solid black;border-radius: 20px; background:white">
+                    <form action="{% url 'update_book' ubook.id user.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="d-md-flex post-entry-2 half" >
+                        <div class="cols-sm-2" data-aos="fade-up" style="margin-left:20px;margin-top:20px;">
+                            <a  class="me-4 thumbnail">
+                                <img src="{{ubook.book_image.url}}" alt="" class="img-fluid" id="image">
+                            </a>
+                        </div>
+                            <div class="cols-sm-6" style="margin-top:20px;margin-left: 20px;margin-right: 10px">
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <label  class="cols-sm-3 col-form-label">Tên đầu sách:</label>
+                                        <div class="cols-sm-6">
+                                            <input type="text" class="form-control" name="book_name" value="{{ubook.book_name}}" style="width: 650px" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label  class="cols-sm-3 col-form-label">Hình ảnh:</label>
+                                        <div class="cols-sm-6">
+                                            <input class="form-control" type="file"  accept="image/*"  name="image"
+                                                   id="file" onchange="choosefile(this)" style="width: 650px">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label  class="cols-sm-3 col-form-label">Tóm tắt</label>
+                                        <div class="cols-sm-6">
+                                            <textarea class="form-control" style="height: 160px;width: 650px" name="tom_tat" type="text">
+                                                {% autoescape off %}
+                                                    {{ubook.book_synopsis}}
+                                                {% endautoescape %}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                        <div class="d-md-flex post-entry-2 half">
+                            <div class="card-body">
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label class="col-sm-2 col-form-label">Chủ đề:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" multiple="multiple" name="topics" required>
+                                           {% for item in to %}
+                                                <option value="{{item.id}}"
+                                                    {% for i in b_to %}
+                                                        {% if i.topic_id == item.id %}
+                                                            selected="selected"
+                                                        {% endif%}
+                                                    {% endfor %}
+                                                >
+                                                {{item.topic_name}}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label  class="col-sm-2 col-form-label" >Chủ đề khác:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="t_other" placeholder="Mỗi chủ đề cách nhau bởi 1 dấu chấm phẩy">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label class="col-sm-2 col-form-label">Thể loại:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" multiple="multiple" name="categories" required>
+                                            {% for item in ca %}
+
+                                                <option value="{{item.id}}"
+                                                    {% for i in b_ca %}
+                                                        {% if i.category_id == item.id %}
+                                                            selected="selected"
+                                                        {% endif%}
+                                                    {% endfor %}
+                                                >
+                                                    {{item.category_name}}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label  class="col-sm-2 col-form-label" >Thể loại khác:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="c_other" placeholder="Mỗi thể loại cách nhau bởi 1 dấu chấm phẩy">
+                                    </div>
+                                </div>
+
+
+                                    <button type="submit" class="btn btn-dark" style="margin-right: 20px; float:right">Xác nhận</button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
