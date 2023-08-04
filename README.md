@@ -17,15 +17,15 @@ To install and run the website, you can follow these steps:
 
 1. Clone the repository from GitHub.
 2. Open the project in your IDE.
-3. Install the dependencies: "pip install -r requirements.txt"
+3. Install the dependencies: `pip install -r requirements.txt`
 4. In settings.py at the Database you edit (mysql workbench):
    * 'NAME': "table name",
-   * 'USER': "database username",
-   * 'PASSWORD': "database password",
-   * 'HOST': "database url",
-   * 'PORT': "database port",
+   * "USER": "database username",
+   * "PASSWORD": "database password",
+   * "HOST": "database url",
+   * "PORT": "database port",
 5. Create a database and run the migrations:
-   * "python manage.py makemigrations"
-   * "python manage.py migrate"
-6. Create a superuser: "python manage.py createsuperuser"
-7. Run the development server: "python manage.py runserver"
+   * `python manage.py makemigrations`
+   * `python manage.py migrate`
+6. Create a superuser: `python manage.py createsuperuser`
+7. Run the development server: `python manage.py runserver`
