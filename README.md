@@ -29,3 +29,7 @@ To install and run the website, you can follow these steps:
    * `python manage.py migrate`
 6. Create a superuser: `python manage.py createsuperuser`
 7. Run the development server: `python manage.py runserver`
+
+
+## Reference material
+You can visit <https://docs.djangoproject.com/en/4.2/ref/databases/> for instructions on connecting the right database to your database
