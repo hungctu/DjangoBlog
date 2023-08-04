@@ -19,11 +19,11 @@ To install and run the website, you can follow these steps:
 2. Open the project in your IDE.
 3. Install the dependencies: `pip install -r requirements.txt`
 4. In settings.py at the Database you edit (mysql workbench):
-   * 'NAME': "table name",
-   * "USER": "database username",
-   * "PASSWORD": "database password",
-   * "HOST": "database url",
-   * "PORT": "database port",
+   * 'NAME': "name",
+   * "USER": "username",
+   * "PASSWORD": "password",
+   * "HOST": "host",
+   * "PORT": "port",
 5. Create a database and run the migrations:
    * `python manage.py makemigrations`
    * `python manage.py migrate`
